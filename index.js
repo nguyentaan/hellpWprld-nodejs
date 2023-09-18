@@ -1,9 +1,22 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config()
 
-app.get('/', (req, res) => {
-    res.send('Hello, world');
+const app = express()
+//CRUD
+app.use(cors({
+    origin: process.env.CLIENT_URL ,
+    methods: ['GET','POST','PUT','DELETE']
+}))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
+app.use('/',(req,res) => {
+    return res.send('Hello, world')
 })
 
-app.listen(port, () => console.log(`Example app listening at http:localhost:${port}`));
+const PORT  = process.env.PORT || 8888
+
+const listener = app.listen(PORT,() =>{
+    console.log(`Server is running on port ${listener.address().port}`)
+}) 
